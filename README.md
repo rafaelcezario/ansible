@@ -5,5 +5,5 @@ Para executar o playbook:
 ansible-playbook demo_rafael.yml
 
 Exemplo de uma execução com sucesso:
-![ansible_aix](https://user-images.githubusercontent.com/2691633/182960503-d3fc2cfb-194a-4845-b3fd-502386e309ca.png)
+![ansible_aix](https://github.com/rafaelcezario/ansible/blob/b27dd420d85bc89e216cf4090f2a5e9d46bf43c3/ansible_aix.png)
 
