@@ -1,0 +1,17 @@
+- name: Install required packages
+  package:
+    name:
+      - apt-utils
+      - postgresql
+      - postgresql-common
+      - python3-psycopg2
+
+- name: Initialize PostgreSQL
+  shell: . /usr/share/postgresql-common/maintscripts-functions && set_system_locale && /usr/bin/pg_createcluster -u postgres 12 main
+  args:
+    creates: /etc/postgresql/12/
+
+- name: Start PostgreSQL service
+  service:
+    name: postgresql
+    state: started

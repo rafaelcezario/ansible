@@ -1,0 +1,46 @@
+---
+
+- name: Get hosts informations
+  hosts: all
+  tasks:
+    - name: Classify hosts depending on their OS distribution
+      group_by:
+        key: os_{{ ansible_facts['distribution'] }}
+
+- hosts: os_SLES
+  tasks:
+    - # tasks that only happen on SUSE go here
+    - name: Get disk informations
+      ansible.builtin.shell: |
+        fdisk -l
+        lsblk
+        df -h
+      register: os_disk
+    
+    - debug:
+        msg: "{{ os_disk.stdout_lines }}"
+
+- hosts: os_CentOS
+  tasks:
+    - # tasks that only happen on SUSE go here
+    - name: Get disk informations
+      ansible.builtin.shell: |
+        fdisk -l
+        lsblk
+        df -h
+      register: os_disk
+    
+    - debug:
+        msg: "{{ os_disk.stdout_lines }}"        
+
+- hosts: os_AIX
+  tasks:
+    - # tasks that only happen on SUSE go here
+    - name: Get disk informations
+      ansible.builtin.shell: |
+        lspv
+        df -g
+      register: os_disk
+    
+    - debug:
+        msg: "{{ os_disk.stdout_lines }}"        
