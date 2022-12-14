@@ -4,7 +4,7 @@
   vars:
     install_packages:
       - wget
-      - vim
+      - vim-enhanced
   collections:
   - ibm.power.aix
   
@@ -18,9 +18,9 @@
  
     - name: Installing packages on AIX 7.3
       ansible.builtin.dnf:
-        name: vim-enhanced
+        name: "{{ item }}"
         state: present
-          #loop: "{{ install_packages }}"
+      loop: "{{ install_packages }}"
       environment:
         PATH: /opt/freeware/bin
       vars:
