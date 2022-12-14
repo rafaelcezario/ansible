@@ -1,5 +1,5 @@
 ---
-
+# Collect informations hosts
 - name: Get hosts informations
   hosts: all
   tasks:
@@ -17,27 +17,51 @@
         df -h
       register: os_disk
     
+    - name: Get OS Informations
+      ansible.builtin.shell: |
+        cat /etc/os-release
+        uname -a
+        cat /proc/cpuinfo
+        cat /proc/meminfo | grep -i mem
+      register: os_system
+    
+    - debug: 
+        var: os_disk 
+
     - debug:
-        msg: "{{ os_disk.stdout_lines }}"
+        var: os_system
+    
 
 - hosts: os_CentOS
   tasks:
     - # tasks that only happen on SUSE go here
     - name: Get disk informations
       ansible.builtin.shell: |
+        cat /etc/os-release
         fdisk -l
         lsblk
         df -h
       register: os_disk
     
+    - name: Get OS Informations
+      ansible.builtin.shell: |
+        cat /etc/os-release
+        uname -a
+        cat /proc/cpuinfo
+        cat /proc/meminfo | grep -i mem
+      register: os_system
+    
     - debug:
         msg: "{{ os_disk.stdout_lines }}"        
+    - debug:
+        var: os_system
 
 - hosts: os_AIX
   tasks:
     - # tasks that only happen on SUSE go here
     - name: Get disk informations
       ansible.builtin.shell: |
+        oslevel -s
         lspv
         df -g
       register: os_disk

@@ -1,0 +1,29 @@
+---
+- name: Install packages
+  hosts: aix
+  vars:
+    install_packages:
+      - wget
+      - vim
+  collections:
+  - ibm.power.aix
+  
+  tasks:
+    - name: Installing packages on AIX 7.2
+      ansible.builtin.yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ install_packages }}"
+      when: ansible_distribution == "AIX" and ansible_distribution_version == "7.2"
+ 
+    - name: Installing packages on AIX 7.3
+      ansible.builtin.dnf:
+        name: vim-enhanced
+        state: present
+          #loop: "{{ install_packages }}"
+      environment:
+        PATH: /opt/freeware/bin
+      vars:
+        ansible_python_interpreter: /opt/freeware/bin/python3     
+      when: ansible_distribution == "AIX" and ansible_distribution_version == "7.3"
+
