@@ -5,8 +5,8 @@
   tasks:
     - name: Copy files
       ansible.builtin.copy:
-        #src: /mnt/c/Users/072914631/Documents/IBM/scripts/dnf_aixtoolbox.sh
-        src: /mnt/c/Users/072914631/Documents/IBM/scripts/dnf-4.2.17-64_51.src.rpm
+        #src: /mnt/dnf_aixtoolbox.sh
+        src: /mnt/dnf-4.2.17-64_51.src.rpm
         dest: /tmp/
       when: ansible_distribution == "AIX" and ansible_distribution_version == "7.3"
 
