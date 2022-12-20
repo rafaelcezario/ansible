@@ -1,6 +1,12 @@
 Detalhamento dos Playbooks:
 
-1 - collect_information.yml
+1 - ansible_logs.yml
+Realiza a coleta de informações dos servidores Linux e AIX. Fiz o uso do when para somente executar se for o sistema operacional especificado.
+Exemplo:
+![ansible_log]()
+![ansible_log]()
+
+2 - collect_information.yml
 
 Realiza a coleta de algumas informações do ambiente. Testado com AIX e Linux.
 
