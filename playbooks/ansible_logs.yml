@@ -1,0 +1,32 @@
+---
+- name: Collect system informations
+  hosts: all
+
+  tasks:  
+    - name: Server Informations - Linux
+      ansible.builtin.debug:
+        msg: |
+          "Nome do host: {{ ansible_facts['nodename'] }}."
+          "Arquitetura do servidor: {{ ansible_facts['architecture'] }}."
+          "Quantidade de processadores: {{ ansible_facts['processor_cores']}} e quantidade de vcpus:{{ ansible_facts['processor_vcpus'] }}."
+          "Total de memória: {{ ansible_facts['memtotal_mb'] }}, destes {{ ansible_facts['memfree_mb'] }} disponiveis para uso."
+          "Endereço IPv4: {{ ansible_facts['all_ipv4_addresses'] }}."
+          "Kernel: {{ ansible_facts['kernel'] }}."     
+      when: ansible_system == "Linux"
+    
+    - name: Server Informations - AIX
+      ansible.builtin.debug:
+        msg: |
+          "Nome do host: {{ ansible_facts['nodename'] }}"
+          "Arquitetura do servidor: {{ ansible_facts['architecture'] }} - {{ ansible_facts['processor'] }}."
+          "Quantidade de processadores: {{ ansible_facts['processor_count']}} e quantidade de cores: {{ ansible_facts['processor_cores']}}."
+          "Total de memória: {{ ansible_facts['memtotal_mb'] }}, destes {{ ansible_facts['memfree_mb'] }} disponiveis para uso."
+          "Endereço IPv4: {{ ansible_facts['all_ipv4_addresses'] }}."
+          "Versao do firmware do servidor Power: {{ ansible_facts['firmware_version'] }}." 
+          "Modelo: {{ ansible_facts['product_name'] }}. Serial: {{ ansible_facts['product_serial'] }}."
+      when: ansible_system == "AIX"
+
+    - name: Display the "output" variable
+      debug:
+        var: output
+        verbosity: 2
