@@ -23,5 +23,5 @@ Playbook criado para copiar um arquivo da máquina de origem para o servidor de 
 O usuário precisa informar o arquivo de origem e o diretório destino. (vars_prompt)
 
 Exemplo de execução:
-# ansible-playbook copy_files.yml
+$ansible-playbook copy_files.yml
 ![copy_files](https://github.com/rafaelcezario/ansible/blob/fb6ade85f810a67857935f414f35fddc5176df14/images/copy_files.png)
