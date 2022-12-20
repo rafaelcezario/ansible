@@ -1,12 +1,18 @@
 ---
 - name: Copy files to servers
-  hosts: aix
+  hosts: aix # Informe o grupo de hosts que voce quer que seja executado
+
+  vars_prompt:
+    - name: filesrc # variavel para receber o nome do arquivo
+      prompt: Informe o caminho completo do arquivo que será copiado
+      private: no
+    - name: filedst # variavel para receber o diretorio de destino para onde o arquivo sera copiado
+      prompt: Informe o diretório de destino
+      private: no
 
   tasks:
     - name: Copy files
       ansible.builtin.copy:
-        #src: /mnt/dnf_aixtoolbox.sh
-        src: /mnt/dnf-4.2.17-64_51.src.rpm
-        dest: /tmp/
+        src: "{{ filesrc }}" # Utiliza o nome do arquivo digitado pelo usuário
+        dest: "{{ filedst }}/" # Utiliza o nome do diretório para onde o arquivo deve ser copiado. Eu insiro uma barra no final para prevenir erros.
       when: ansible_distribution == "AIX" and ansible_distribution_version == "7.3"
-
