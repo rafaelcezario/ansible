@@ -5,7 +5,7 @@ Para executar o playbook:
 $ ansible-playbook rafael_aix_disk_automations.yml
 
 Exemplo de uma execução com sucesso:
-![ansible_aix](https://github.com/rafaelcezario/ansible/blob/b27dd420d85bc89e216cf4090f2a5e9d46bf43c3/ansible_aix.png)
+![ansible_aix](https://github.com/rafaelcezario/ansible/blob/8143a8b8f18e6756e1286cec7fc18575d5a6012e/images/ansible_aix.png)
 
 
 Servidor AIX alterado pelo playbook do Ansible.
