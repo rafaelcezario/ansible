@@ -5,7 +5,7 @@
 Realiza a coleta de informações dos servidores Linux e AIX. Fiz o uso do when para somente executar se for o sistema operacional especificado.
 
 Exemplo:
-
+![ansible_log](https://github.com/rafaelcezario/ansible/blob/029714f79b56e65e972a724212e2cdb329963f7a/images/ansible_logs_1.png)
 ![ansible_log](https://github.com/rafaelcezario/ansible/blob/ad7b3e712b42bc546bc47e04190f9ad5b465b30a/images/ansible_logs_2.png)
 
 
