@@ -1,0 +1,47 @@
+---
+- name: "AIX - Automation and Disk operations"
+  hosts: aix # Vai executar apenas nos servidores do grupo AIX (definido no hosts)
+  gather_facts: false
+  # log - /var/log/ansible.log (definido no ansible.cfg)
+
+  vars_prompt:
+    - name: volumegroup # variavel que recebe o nome digitado pelo usuario
+      prompt: Informe o nome do vg # Informar o nome do VG
+      private: false
+
+    - name: fsname # variavel que recebe o nome digitado pelo usuario
+      prompt: Informe o nome do filesystem # Informar o nome do filesystem
+      private: false
+
+    - name: fssize # variavel que recebe o nome digitado pelo usuario
+      prompt: Informe o tamanho do filesystem # Informar o nome do filesystem
+      private: false
+
+  tasks:
+    - name: "Creating a VG - {{ volumegroup }}"
+      ibm.power_aix.lvg:
+        state: present # Se existir utiliza o existente, se não, cria
+        pvs: hdisk0 # É necessário informar o nome do hdisk
+        vg_name: '{{ volumegroup }}' # usa o nome do VG especificado na variavel
+        pp_size: 1024 # Physical partition SIZE in megabytes
+        vg_type: scalable
+
+    - name: "Varyon VG - {{ volumegroup }}"
+      ibm.power_aix.lvg:
+        vg_name: '{{ volumegroup }}' # Nome do VG
+        state: varyon
+
+    - name: "Creating a JFS2 filesystem - {{ fsname }} "
+      ibm.power_aix.filesystem:
+        state: present
+        filesystem: "/{{ filesystem }}" # Utiliza o nome do Filesystem digitado
+        fs_type: jfs2 # Tipo do filesystem
+        attributes: size={{ fssize }},isnapshot='no' # Informar o tamanho do Filesystem
+        permissions: rw
+        auto_mount: true # Monta o filesystem automaticamente
+        vg: '{{ volumegroup }}' # Utiliza o nome do VG digitado
+
+    - name: "Mounting Filesystem - {{ fsname }}"
+      ibm.power_aix.mount:
+        state: mount
+        mount_dir: "/{{ filesystem }}"
