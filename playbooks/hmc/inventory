@@ -1,4 +1,2 @@
 [hmcs]
-vhmccloudvm174.isst.aus.stglabs.ibm.com ansible_host=9.3.147.218
-#vhmccloudvm82.isst.aus.stglabs.ibm.com ansible_host=9.3.147.126
-
+vhmc.empresa.com ansible_host=x.x.x.x
