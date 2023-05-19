@@ -1,0 +1,26 @@
+---
+- name: HMC activate logical partition
+  hosts: hmcs
+  collections:
+    - ibm.power_hmc
+  connection: local
+  vars:
+    curr_hmc_auth:
+      username: "{{ ansible_user }}"
+      password: "{{ ansible_password }}"
+
+  vars_prompt:
+    - name: lpar_name # variavel que recebe o nome digitado pelo usuario
+      prompt: Digite o nome da LPAR # Informar o nome da LPAR
+      private: false
+
+  tasks:
+    - name: Activate LPAR "{{ lpar_name }}" with default profile
+      powervm_lpar_instance:
+        hmc_host: '{{ inventory_hostname }}'
+        hmc_auth: "{{ curr_hmc_auth }}"
+        vm_name: "{{ lpar_name }}"
+        # prof_name:
+        keylock: normal
+        action: poweron
+      register: lpar_result

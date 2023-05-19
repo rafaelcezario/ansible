@@ -1,0 +1,44 @@
+---
+- name: HMC deactivate logical partition
+  hosts: hmcs
+  collections:
+    - ibm.power_hmc
+  connection: local
+  vars:
+    curr_hmc_auth:
+      username: "{{ ansible_user }}"
+      password: "{{ ansible_password }}"
+
+  vars_prompt:
+    - name: lpar_name # variavel que recebe o nome digitado pelo usuario
+      prompt: Digite o nome da LPAR # Informar o nome do VG
+      private: false
+
+  tasks:
+    - name: "Reading server state"
+      powervm_lpar_instance:
+        hmc_host: '{{ inventory_hostname }}'
+        hmc_auth: "{{ curr_hmc_auth }}"
+        vm_name: "{{ lpar_name }}"
+        state: facts
+      register: lpar_state
+
+    - name: "Deactivate lpar Running"
+      powervm_lpar_instance:
+        hmc_host: '{{ inventory_hostname }}'
+        hmc_auth: "{{ curr_hmc_auth }}"
+        vm_name: "{{ lpar_name }}"
+        shutdown_option: OSImmediate
+        action: shutdown
+      when: lpar_state.partition_info.PartitionState == "RuNning"
+
+    - name: "Deactivate lpar state Open Firmware"
+      powervm_lpar_instance:
+        hmc_host: '{{ inventory_hostname }}'
+        hmc_auth: "{{ curr_hmc_auth }}"
+        vm_name: "{{ lpar_name }}"
+        shutdown_option: Immediate
+        action: shutdown
+      until: lpar_state.partition_info.PartitionState == "open firmware"
+      retries: 5
+      delay: 30
