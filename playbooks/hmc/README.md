@@ -15,4 +15,4 @@ Realiza o shutdown da LPAR utilizando a HMC. Utilizado o vars_prompt para que o 
 Faz o shutdown de acordo com o status da LPAR (open firmware ou Running)
 
 ### Sugestão: Utilizar o ansible-vault para que as variáveis presentes no arquivos group_vars/hmcs/vars.yml sejam criptografados.
-ansible-playbook start_lpar.yml -i inventory --ask-vault-pass
+$ ansible-playbook start_lpar.yml -i inventory --ask-vault-pass
